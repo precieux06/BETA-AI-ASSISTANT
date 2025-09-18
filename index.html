@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart AI</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    input, textarea, button {
+      width: 90%;
+      max-width: 600px;
+      margin: 10px auto;
+      display: block;
+      font-size: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #00c6ff;
+      color: #fff;
+      cursor: pointer;
+    }
+    .response {
+      white-space: pre-wrap;
+      margin-top: 20px;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 Smart AI</h1>
+  <textarea id="prompt" placeholder="Pose ta question..."></textarea>
+  <button onclick="askAI()">Envoyer</button>
+  <div class="response" id="result"></div>
+
+  <script>
+    async function askAI() {
+      const prompt = document.getElementById('prompt').value;
+      const res = await fetch('/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+const data = await res.json();
+      document.getElementById('result').textContent = data.response || 'Erreur';
+    }
+  </script>
+</body>
+  </html>
